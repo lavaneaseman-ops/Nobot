@@ -67,11 +67,26 @@ function takeTicket(){
  save();
  if(navigator.vibrate) navigator.vibrate(80);
 }
+function faNumber(n){
+ const ones=["صفر","یک","دو","سه","چهار","پنج","شش","هفت","هشت","نه","ده","یازده","دوازده","سیزده","چهارده","پانزده","شانزده","هفده","هجده","نوزده"];
+ const tens=["","","بیست","سی","چهل","پنجاه","شصت","هفتاد","هشتاد","نود"];
+ const hundreds=["","صد","دویست","سیصد","چهارصد","پانصد","ششصد","هفتصد","هشتصد","نهصد"];
+ if(n<20) return ones[n];
+ if(n<100) return tens[Math.floor(n/10)] + (n%10 ? " و "+ones[n%10] : "");
+ if(n<1000) return hundreds[Math.floor(n/100)] + (n%100 ? " و "+faNumber(n%100) : "");
+ return String(n);
+}
 function speak(){
  if(!state.called)return;
  speechSynthesis.cancel();
- let u=new SpeechSynthesisUtterance(`شماره ${state.called}، به باجه ${state.counter} مراجعه کند`);
- u.lang="fa-IR"; u.rate=.85; speechSynthesis.speak(u);
+ const text=`شماره ${faNumber(state.called)}، لطفاً به باجه شماره ${faNumber(state.counter)} مراجعه کنید`;
+ let u=new SpeechSynthesisUtterance(text);
+ u.lang="fa-IR";
+ u.rate=.78;
+ const voices=speechSynthesis.getVoices();
+ const fa=voices.find(v => (v.lang||"").toLowerCase().startsWith("fa"));
+ if(fa) u.voice=fa;
+ speechSynthesis.speak(u);
 }
 function next(c){
  if(state.served>=state.issued){alert("نوبتی در انتظار نیست.");return}
