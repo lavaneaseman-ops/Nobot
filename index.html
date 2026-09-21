@@ -133,7 +133,7 @@ input,select,textarea{
     </div>
 <div class="card"><label>نام طرف مقابل</label>
 <div class="customerPicker">
-  <input id="party" autocomplete="off" placeholder="نام مشتری را تایپ کنید" oninput="filterCustomers()" onfocus="filterCustomers()">
+  <input id="party" autocomplete="off" placeholder="نام مشتری را تایپ کنید" oninput="filterCustomers(false)">
   <button type="button" class="customerArrow" onclick="toggleCustomerMenu()">⌄</button>
   <div id="customerMenu" class="customerMenu"></div>
 </div>
@@ -203,19 +203,24 @@ function persistCustomers(){localStorage.setItem('tradebook_customers',JSON.stri
 function renderCustomers(){
   renderCustomerManager();
 }
-function matchingCustomers(){
+function matchingCustomers(showAll=false){
   const q=($('party')?.value||'').trim().toLowerCase();
-  return customers.slice().sort((a,b)=>a.localeCompare(b)).filter(n=>!q||n.toLowerCase().startsWith(q));
+  if(showAll) return customers.slice().sort((a,b)=>a.localeCompare(b));
+  if(!q) return [];
+  return customers.slice().sort((a,b)=>a.localeCompare(b))
+    .filter(n=>n.toLowerCase().startsWith(q));
 }
-function filterCustomers(){
+function filterCustomers(showAll=false){
   const m=$('customerMenu'); if(!m)return;
-  const names=matchingCustomers();
-  m.innerHTML=names.length?names.map(n=>`<div class="customerOption" onclick="chooseCustomer(${JSON.stringify(n).replace(/"/g,'&quot;')})">${n}</div>`).join(''):'<div class="customerOption small">موردی پیدا نشد</div>';
+  const names=matchingCustomers(showAll);
+  if(!names.length){m.style.display='none';m.innerHTML='';return}
+  m.innerHTML=names.map(n=>`<div class="customerOption" onclick="chooseCustomer(${JSON.stringify(n).replace(/"/g,'&quot;')})">${n}</div>`).join('');
   m.style.display='block';
 }
 function toggleCustomerMenu(){
   const m=$('customerMenu'); if(!m)return;
-  if(m.style.display==='block')m.style.display='none';else{ $('party').value=''; filterCustomers(); }
+  if(m.style.display==='block'){m.style.display='none';return}
+  filterCustomers(true);
 }
 function chooseCustomer(n){$('party').value=n;$('customerMenu').style.display='none';}
 function addCustomer(){
