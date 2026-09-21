@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><title>دفتر معاملات</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f2f2f7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;color:#111;padding:18px 14px 35px}.wrap{max-width:650px;margin:auto}h1{font-size:25px}.card{background:#fff;border-radius:20px;padding:16px;margin:12px 0;box-shadow:0 2px 14px #0000000d}label{display:block;font-size:13px;color:#666;margin:12px 2px 5px}input,select,textarea{width:100%;padding:14px;border:1px solid #ddd;border-radius:13px;background:#fafafa;color:#111;font-size:17px}textarea{min-height:75px}.row{display:grid;grid-template-columns:1fr 1fr;gap:9px}.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.seg input{display:none}.seg label{margin:0;text-align:center;padding:13px;border:1px solid #ddd;border-radius:13px;font-size:16px;color:#333}.seg input:checked+label{background:#111;color:#fff;border-color:#111}.section{border:1px solid #e8e8ed;border-radius:17px;padding:13px;margin-top:12px}.sectionTitle{font-weight:800;font-size:18px}.buyTitle{color:#16863c}.sellTitle{color:#c93832}.rateBox{background:#f7f7fa;border-radius:16px;padding:13px;margin:12px 0}.calc{font-size:13px;color:#666;margin-top:8px;line-height:1.7}.btn{width:100%;border:0;border-radius:15px;padding:15px;font-size:18px;font-weight:700;background:#007aff;color:#fff;margin-top:15px}.small{font-size:13px;color:#777}.trade{border:1px solid #e7e7ec;border-radius:16px;padding:14px;margin-top:12px}.tradeHead{display:flex;justify-content:space-between;gap:8px;align-items:center;border-bottom:1px solid #eee;padding-bottom:10px}.tradeFlow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:9px;margin:13px 0}.flowBox{background:#f7f7fa;border-radius:13px;padding:11px;text-align:center}.flowBox b{display:block;font-size:17px}.arrow{font-size:22px}.ratePill{text-align:center;background:#eef5ff;border-radius:11px;padding:8px;margin:8px 0;font-weight:700}.meta{font-size:13px;color:#777;line-height:1.8}.actions{display:flex;gap:8px;margin-top:9px}.actions button{border:0;border-radius:10px;padding:8px 10px}.danger{background:#ff3b30;color:#fff}.copy{background:#007aff;color:#fff}.summary{display:grid;grid-template-columns:1fr 1fr;gap:8px}.box{background:#f6f6f6;border-radius:13px;padding:12px;text-align:center}.box b{display:block;font-size:18px;margin-top:4px}
+@media(max-width:420px){.row{grid-template-columns:1fr}.tradeFlow{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}}
+.card{background:#1c1c1e}.section{border-color:#38383a}input,select,textarea,.box,.flowBox,.rateBox{background:#2c2c2e;color:#fff;border-color:#444}.small,label,.meta,.calc{color:#aaa}.trade,.tradeHead{border-color:#333}.ratePill{background:#18314f}}
+
+:root{--gold:#c89b2c;--gold2:#f0c85a;--silver:#b9bec7;--ink:#151515}
+body{background:#f3f4f6;color:var(--ink)}
+.wrap{border:3px solid var(--gold);border-radius:24px;padding:10px;background:#fff;box-shadow:0 5px 24px #00000012}
+.card,.section,.rateBox,.box{background:#fff!important;border:1.5px solid var(--silver)!important;box-shadow:none}
+.card{border-radius:18px}
+.section,.rateBox,.box{border-radius:15px}
+input,select,textarea{background:#fff!important;border:1.5px solid var(--silver)!important;color:#111!important}
+input:focus,select:focus,textarea:focus{outline:3px solid #f0c85a55;border-color:var(--gold)!important}
+.seg{gap:10px}
+.seg label{background:#fff!important;border:2px solid var(--silver)!important;color:#111!important;font-weight:800}
+.seg input:checked+label{background:linear-gradient(180deg,#ffe58a,#d8a72d)!important;border:2px solid #b9870c!important;color:#111!important;box-shadow:0 2px 8px #b9870c55}
+.rateBox .seg label{font-size:18px;padding:15px 8px}
+#multiply+label::first-letter,#divide+label::first-letter{font-size:22px}
+.rateBox{border:2px solid var(--gold)!important}
+.btn{background:linear-gradient(180deg,#e3b83f,#b88712);color:#111}
+.small,label{color:#555}
+
+/* Final visual treatment requested */
+body{
+  background:#d9d9dc!important;
+}
+.wrap{
+  max-width:650px;
+  margin:auto;
+  background:transparent!important;
+  border:4px solid #c99b28!important;
+  border-radius:10px!important;
+  padding:12px!important;
+  box-shadow:
+    0 0 0 1px #f6dc7a inset,
+    0 3px 12px #00000020!important;
+}
+.card,.section,.rateBox,.box,
+input,select,textarea{
+  background:#fff!important;
+  border:2px solid #aeb3ba!important;
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 0 0 1px #e8ebee,
+    0 2px 5px #00000012!important;
+  color:#111!important;
+}
+.card,.section,.rateBox,.box{
+  border-radius:12px!important;
+}
+input,select,textarea{
+  border-radius:10px!important;
+}
+.seg label{
+  background:#fff!important;
+  border:2px solid #aeb3ba!important;
+  box-shadow:inset 0 1px 0 #fff,0 0 0 1px #e8ebee,0 2px 5px #00000012!important;
+}
+.seg input:checked+label{
+  background:#fff!important;
+  border:3px solid #c99b28!important;
+  color:#111!important;
+  box-shadow:0 0 0 2px #f6dc7a55,0 2px 6px #00000018!important;
+}
+.rateBox{
+  border:2px solid #aeb3ba!important;
+}
+
+.tradeTextEnglish{
+  direction:ltr;
+  text-align:left;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  line-height:1.9;
+  letter-spacing:.1px;
+}
+</style></head><body><div class="wrap"><h1>دفتر معاملات</h1>
+<div class="card"><label>نام طرف مقابل</label><input id="party" placeholder="مثلاً شرکت / مشتری">
+<div class="section"><div class="sectionTitle buyTitle">خرید</div><div class="row"><div><label>ارز خرید</label><select id="buyCurrency"></select></div><div><label>مبلغ خرید</label><input id="buyAmount" type="text" inputmode="decimal" autocomplete="off" placeholder="مبلغ خرید را وارد کنید"></div></div></div>
+<div class="rateBox">
+<label style="margin-top:0">نحوه محاسبه ریت</label>
+<div class="seg">
+<input type="radio" name="rateMode" id="multiply" value="multiply" checked><label for="multiply">✕ ضرب کردن</label>
+<input type="radio" name="rateMode" id="divide" value="divide"><label for="divide">÷ تقسیم کردن</label>
+</div>
+<label>ریت تبدیل</label><input id="rate" type="text" inputmode="decimal" autocomplete="off" step="any" placeholder="0">
+<div id="calcHint" class="calc">ضرب یا تقسیم را انتخاب کنید؛ مبلغ طرف مقابل خودکار محاسبه می‌شود.</div>
+</div>
+<div class="section"><div class="sectionTitle sellTitle">فروش</div><div class="row"><div><label>ارز فروش</label><select id="sellCurrency"></select></div><div><label>مبلغ فروش</label><input id="sellAmount" type="text" inputmode="decimal" autocomplete="off" placeholder="مبلغ فروش را وارد کنید"></div></div></div>
+<label>کمیسیون</label><div class="seg"><input type="radio" name="commissionType" id="creceive" value="دریافت" checked><label for="creceive">دریافت</label><input type="radio" name="commissionType" id="cpay" value="پرداخت"><label for="cpay">پرداخت</label></div>
+<div class="row"><div><label>ارز کمیسیون</label><select id="commissionCurrency"></select></div><div><label>مبلغ کمیسیون</label><input id="commission" type="text" inputmode="decimal" autocomplete="off" placeholder="0"></div></div>
+<label>شماره معامله</label><input id="txid" placeholder="اختیاری"><label>توضیحات</label><textarea id="desc" placeholder="توضیحات معامله"></textarea><button class="btn" onclick="saveTrade()">ثبت معامله</button></div>
+<div class="card"><div style="display:flex;justify-content:space-between"><b>خلاصه</b><span id="count" class="small"></span></div><div class="summary"><div class="box">تعداد معاملات<b id="nTrades">۰</b></div><div class="box">آخرین کمیسیون<b id="lastCommission">۰</b></div></div></div>
+<div class="card"><b>معاملات ثبت‌شده</b><div id="list"><p class="small">هنوز معامله‌ای ثبت نشده.</p></div></div></div>
+<script>
+const $=id=>document.getElementById(id);
+const num=v=>Number(String(v??'').replace(/,/g,'').trim())||0;
+const prettyInput=v=>{
+  let s=String(v??'').replace(/,/g,'').replace(/[^0-9.]/g,'');
+  let parts=s.split('.'); if(parts.length>2)s=parts.shift()+'.'+parts.join('');
+  let [a,d]=s.split('.'); a=(a||'').replace(/^0+(?=\d)/,'');
+  a=a.replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  return d!==undefined?a+'.'+d:a;
+};
+ const currencies=[['USD','🇺🇸','دلار'],['USD TEH','🇮🇷','دلار تهران'],['EUR','🇪🇺','یورو'],['CNY','🇨🇳','یوان'],['CAD','🇨🇦','دلار کانادا'],['AED','🇦🇪','درهم'],['TMN','🇮🇷','تومان'],['TRL','🇹🇷','لیر ترکیه']];
+const opts=()=>currencies.map(x=>`<option value="${x[0]}">${x[1]} ${x[0]} - ${x[2]}</option>`).join(''); ['buyCurrency','sellCurrency','commissionCurrency'].forEach(id=>$(id).innerHTML=opts()); $('sellCurrency').value='TMN';
+let trades=JSON.parse(localStorage.getItem('tradebook_v2')||'[]'); const fmt=n=>Number(n||0).toLocaleString('en-US',{maximumFractionDigits:4}); const flag=c=>(currencies.find(x=>x[0]===c)||['',''])[1]||'';
+let lastAmountEdited='buy';
+function rateMode(){return document.querySelector('input[name="rateMode"]:checked').value}
+function calculate(source){
+  if(source==='buy'||source==='sell') lastAmountEdited=source;
+  let b=num($('buyAmount').value),s=num($('sellAmount').value),r=num($('rate').value),mode=rateMode();
+  if(!r){
+    $('calcHint').textContent='ضرب یا تقسیم را انتخاب کنید؛ مبلغ یکی از طرفین + ریت را وارد کنید.';
+    return;
+  }
+  if(lastAmountEdited==='sell' && s){
+    b=mode==='multiply' ? s/r : s*r;
+    $('buyAmount').value=prettyInput(String(+b.toFixed(6)));
+  }else if(b){
+    s=mode==='multiply' ? b*r : b/r;
+    $('sellAmount').value=prettyInput(String(+s.toFixed(6)));
+  }else if(s){
+    b=mode==='multiply' ? s/r : s*r;
+    $('buyAmount').value=prettyInput(String(+b.toFixed(6)));
+  }
+  b=num($('buyAmount').value);s=num($('sellAmount').value);
+  if(b&&s){
+    const sign=mode==='multiply'?'×':'÷';
+    $('calcHint').textContent=`${fmt(b)} ${$('buyCurrency').value} ${sign} ${fmt(r)} = ${fmt(s)} ${$('sellCurrency').value}`;
+  }
+}
+$('buyAmount').addEventListener('input',e=>{e.target.value=prettyInput(e.target.value);calculate('buy')});
+$('sellAmount').addEventListener('input',e=>{e.target.value=prettyInput(e.target.value);calculate('sell')});
+$('rate').addEventListener('input',e=>{e.target.value=prettyInput(e.target.value);calculate()});
+$('commission').addEventListener('input',e=>{e.target.value=prettyInput(e.target.value)});
+document.querySelectorAll('input[name="rateMode"]').forEach(x=>x.addEventListener('change',()=>calculate()));
+['buyCurrency','sellCurrency'].forEach(id=>$(id).addEventListener('change',()=>calculate()));
+function saveTrade(){let buyAmount=num($('buyAmount').value),rate=num($('rate').value),sellAmount=num($('sellAmount').value);if(!$('party').value.trim()){alert('نام طرف مقابل را وارد کنید.');return}if(!buyAmount){alert('مبلغ خرید را وارد کنید.');return}if(!rate){alert('ریت را وارد کنید.');return}if(!sellAmount)sellAmount=buyAmount*rate;const t={id:Date.now(),isoDate:new Date().toISOString(),date:new Date().toLocaleString('fa-IR'),party:$('party').value.trim(),buyCurrency:$('buyCurrency').value,buyAmount,rate,sellCurrency:$('sellCurrency').value,sellAmount,commission:num($('commission').value)||0,commissionCurrency:$('commissionCurrency').value,commissionType:document.querySelector('input[name="commissionType"]:checked').value,txid:$('txid').value.trim(),desc:$('desc').value.trim()};trades.unshift(t);localStorage.setItem('tradebook_v2',JSON.stringify(trades));['buyAmount','rate','sellAmount','commission','txid','desc'].forEach(x=>$(x).value='');lastAmountEdited='buy';calculate();render()}
+function del(id){if(confirm('این معامله حذف شود؟')){trades=trades.filter(t=>t.id!==id);localStorage.setItem('tradebook_v2',JSON.stringify(trades));render()}}
+const currencyFlag=c=>{
+  const code=String(c||'').split(' ')[0].toUpperCase();
+  return ({USD:'🇺🇸', 'USD-TEH':'🇺🇸', 'USD_TEH':'🇺🇸', 'USDTEH':'🇺🇸',
+           EUR:'🇪🇺',CNY:'🇨🇳',CAD:'🇨🇦',AED:'🇦🇪',TMN:'🇮🇷',IRR:'🇮🇷',TRL:'🇹🇷',TRY:'🇹🇷'})[code]||'';
+};
+function tradeText(t){
+  const commType=t.commissionType==='دریافت'?'rec':'pay';
+  const commAmount=Number(String(t.commission??'0').replace(/,/g,'').trim())||0;
+  const commCurrency=t.commissionCurrency||'';
+  const dateObj=t.isoDate?new Date(t.isoDate):new Date(t.id||Date.now());
+  const date=dateObj.toLocaleDateString('en-CA');
+  const lines=[
+    `Customer: ${t.party}`,
+    ``,
+    `Buy: ${currencyFlag(t.buyCurrency)} ${fmt(t.buyAmount)} ${t.buyCurrency}`,
+    ``,
+    `Sell: ${currencyFlag(t.sellCurrency)} ${fmt(t.sellAmount)} ${t.sellCurrency}`,
+    ``,
+    `Rate: ${fmt(t.rate)}`
+  ];
+  if(Math.abs(commAmount)>0){
+    lines.push(``, `Comm: ${fmt(commAmount)} ${currencyFlag(commCurrency)} ${commCurrency} (${commType})`);
+  }
+  lines.push(``, `Date: ${date}`);
+  return lines.join('\n');
+}
+async function copyTrade(id,btn){
+  const t=trades.find(x=>x.id===id); if(!t)return;
+  const text=tradeText(t);
+  try{
+    await navigator.clipboard.writeText(text);
+  }catch(e){
+    const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.focus();ta.select();document.execCommand('copy');ta.remove();
+  }
+  const old=btn.textContent;btn.textContent='کپی شد ✓';setTimeout(()=>btn.textContent=old,1400);
+}
+function render(){$('nTrades').textContent=trades.length.toLocaleString('fa-IR');$('lastCommission').textContent=trades.length?(trades[0].commission?`${trades[0].commissionType} ${fmt(trades[0].commission)} ${trades[0].commissionCurrency}`:'۰'):'۰';$('list').innerHTML=trades.length?trades.map(t=>`<div class="trade"><div class="tradeHead"><b>${t.party}</b><span class="small">${t.date}</span></div><div class="tradeFlow"><div class="flowBox"><span class="small">خرید</span><b>${flag(t.buyCurrency)} ${fmt(t.buyAmount)} ${t.buyCurrency}</b></div><div class="arrow">←</div><div class="flowBox"><span class="small">فروش</span><b>${flag(t.sellCurrency)} ${fmt(t.sellAmount)} ${t.sellCurrency}</b></div></div><div class="ratePill">ریت: ${fmt(t.rate)}</div><div class="meta">کمیسیون: ${t.commissionType} ${fmt(t.commission)} ${flag(t.commissionCurrency)} ${t.commissionCurrency}${t.txid?`<br>شماره معامله: ${t.txid}`:''}${t.desc?`<br>توضیحات: ${t.desc}`:''}</div><div class="actions"><button class="copy" onclick="copyTrade(${t.id},this)">کپی صورت معامله</button><button class="danger" onclick="del(${t.id})">حذف</button></div></div>`).join(''):'<p class="small">هنوز معامله‌ای ثبت نشده.</p>'}
+render();
+</script></body></html>
