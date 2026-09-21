@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="نوبت‌دهی">
+<title>نوبت‌دهی ۴ باجه</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;color-scheme:light dark}
+*{box-sizing:border-box} body{margin:0;min-height:100vh;background:#f2f2f7;color:#111;padding:max(18px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom))}
+.wrap{max-width:600px;margin:auto}.card{background:#fff;border-radius:22px;padding:18px;margin:12px 0;box-shadow:0 3px 18px #00000012}
+h1{font-size:25px;margin:5px 0 12px}.muted{color:#777;font-size:14px}.big{font-size:54px;font-weight:800;letter-spacing:2px;text-align:center;margin:8px}
+button{width:100%;border:0;border-radius:16px;padding:17px 12px;font-size:19px;font-weight:700;margin:6px 0;background:#007aff;color:white}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.counter{background:#34c759}.secondary{background:#5856d6}.danger{background:#ff3b30}.status{text-align:center;font-size:18px;min-height:28px}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.badge{font-weight:700}
+@media(prefers-color-scheme:dark){body{background:#000;color:#fff}.card{background:#1c1c1e}.muted{color:#aaa}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <h1>سیستم نوبت‌دهی</h1>
+ <div class="card">
+   <div class="muted">آخرین نوبت صادرشده</div>
+   <div id="issued" class="big">A000</div>
+   <button onclick="takeTicket()">دریافت نوبت</button>
+   <div id="ticketMsg" class="status"></div>
+ </div>
+
+ <div class="card">
+   <div class="muted">در حال فراخوان</div>
+   <div id="called" class="big">—</div>
+   <div id="counterText" class="status">هنوز نوبتی فراخوان نشده</div>
+ </div>
+
+ <div class="card">
+   <div class="row"><b>فراخوان نفر بعدی</b><span id="waiting" class="badge">در انتظار: ۰</span></div>
+   <div class="grid">
+     <button class="counter" onclick="next(1)">باجه ۱</button>
+     <button class="counter" onclick="next(2)">باجه ۲</button>
+     <button class="counter" onclick="next(3)">باجه ۳</button>
+     <button class="counter" onclick="next(4)">باجه ۴</button>
+   </div>
+   <button class="secondary" onclick="repeatCall()">تکرار فراخوان</button>
+ </div>
+
+ <div class="card">
+   <div class="muted">شماره‌ها روی همین آیفون ذخیره می‌شوند.</div>
+   <button class="danger" onclick="resetDay()">شروع روز جدید / ریست</button>
+ </div>
+</div>
+<script>
+let state=JSON.parse(localStorage.getItem("queue4")||'{"issued":0,"served":0,"called":0,"counter":0}');
+const pad=n=>"A"+String(n).padStart(3,"0");
+function save(){localStorage.setItem("queue4",JSON.stringify(state));render()}
+function render(){
+ document.getElementById("issued").textContent=pad(state.issued);
+ document.getElementById("called").textContent=state.called?pad(state.called):"—";
+ document.getElementById("counterText").textContent=state.called?`شماره ${pad(state.called)} ← باجه ${state.counter}`:"هنوز نوبتی فراخوان نشده";
+ document.getElementById("waiting").textContent=`در انتظار: ${Math.max(0,state.issued-state.served)}`;
+}
+function takeTicket(){
+ state.issued++;
+ document.getElementById("ticketMsg").textContent=`نوبت شما: ${pad(state.issued)}`;
+ save();
+ if(navigator.vibrate) navigator.vibrate(80);
+}
+function speak(){
+ if(!state.called)return;
+ speechSynthesis.cancel();
+ let u=new SpeechSynthesisUtterance(`شماره ${state.called}، به باجه ${state.counter} مراجعه کند`);
+ u.lang="fa-IR"; u.rate=.85; speechSynthesis.speak(u);
+}
+function next(c){
+ if(state.served>=state.issued){alert("نوبتی در انتظار نیست.");return}
+ state.served++; state.called=state.served; state.counter=c; save(); speak();
+}
+function repeatCall(){speak()}
+function resetDay(){
+ if(confirm("همه شماره‌های امروز پاک و از A001 شروع شود؟")){
+  state={issued:0,served:0,called:0,counter:0}; localStorage.setItem("queue4",JSON.stringify(state));
+  document.getElementById("ticketMsg").textContent=""; render();
+ }
+}
+render();
+</script>
+</body>
+</html>
